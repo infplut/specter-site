@@ -1,46 +1,73 @@
-# Specter Site
+SPECTER EXTERNAL — приватный клиент для Roblox
 
-Статический сайт-витрина. Никакого backend: ключи и HWID остаются на Cloudflare Worker.
+Specter — внешний клиент с удобным меню, быстрой настройкой и обновлениями. Доступ по ключу, привязка к одному ПК, защита HWID.
 
-## Перед публикацией
+🔥 ФУНКЦИИ
 
-Ссылка на покупку уже стоит:
+Aimbot:
+• Memory / Mouse
+• FOV, плавность, выбор части тела
+• Triggerbot
+• Hitbox expander
+• Target HUD
 
-```text
-https://funpay.com/users/7776085/
-```
+Silent Aim:
+• выбор цели и FOV
+• отдельные радиусы для оружия
+• статус и слоты
 
-Она используется в шапке, в первом экране и в блоке «Купить ключ». Если профиль FunPay изменится — замени ссылку в `index.html`.
+ESP:
+• Boxes, Skeleton, Head Dot
+• Health, Name, Distance, Item
+• Tracers, стрелки, Chams
+• Preview и редактор
 
-## GitHub Pages
+Movement:
+• Speed, Jump Power, Infinite Jump
+• Anti-fling, Noclip, Flight
+• Jump visuals
 
-1. Создай публичный репозиторий, например `specter-site`.
-2. Загрузи в него все файлы из этой папки:
-   - `index.html`
-   - картинки `logo.png`, `esp.png`, `aimbot.png`, `silent-aim.png`, `player.png`, `world.png`, `players.png`, `configs.png`
-   - `favicon.ico`
-3. Открой **Settings → Pages**.
-4. Source: **Deploy from a branch**.
-5. Branch: `main`, folder: `/ (root)`.
-6. Нажми **Save**.
-7. Через 1–2 минуты сайт будет тут:
+World:
+• Camera FOV, освещение, туман, Bloom
+• Brightness, Exposure, время
+• Waypoints, Sky tint, частицы
+• World chams, кастомный скайбокс
 
-```text
-https://ТВОЙ-НИК.github.io/specter-site/
-```
+Visuals:
+• China hat, trails, hit bubbles, hit marker
+• Halo, top hat, crown, horns, helmet
+• Aura, orbit orbs, wave
+• Crosshair, kill banner, vignette
 
-Если назвать репозиторий `ТВОЙ-НИК.github.io`, адрес будет:
+HUD:
+• Watermark, Bind list, Target HUD, FPS, Media
 
-```text
-https://ТВОЙ-НИК.github.io/
-```
+Players / Utility:
+• Список игроков, Spectate, Teleport
+• Explorer и выбор моделей
+• Configs и темы
 
-## Важно
+💻 КАК ПОЛУЧИТЬ
+1. Оплата на FunPay.
+2. Получаешь ключ.
+3. Скачиваешь лоадер.
+4. Вводишь ключ — первый запуск привязывает ключ к твоему ПК.
 
-GitHub Pages может заблокировать сайт за тематику игровых читов. Если это критично, этот же набор файлов можно залить на Cloudflare Pages без изменений.
+⚙️ ТРЕБОВАНИЯ
+• Windows 10/11 x64
+• Установленный Roblox
+• Интернет для проверки ключа
 
-## Что менять
+🔑 УСЛОВИЯ
+• 1 ключ = 1 ПК (HWID)
+• Для смены ПК — сброс HWID
+• Обновления через лоадер
+• Ключ не передаётся третьим лицам
 
-- `logo.png` — логотип.
-- `*.png` — скриншоты.
-- `index.html` — тексты, цены, ссылка на FunPay.
+⚠️ ВАЖНО
+• Это сторонний софт, не официальный продукт Roblox.
+• Использование может нарушать правила Roblox.
+• Гарантии отсутствия блокировок нет — используй на свой риск.
+• После активации ключ считается использованным.
+
+По вопросам — пиши в FunPay.
