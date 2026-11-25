@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Specter — Roblox External</title>
 <meta name="description" content="Specter External — Aimbot, Silent Aim, ESP, Movement, World, HUD и защита по ключу и HWID.">
-<link rel="icon" href="favicon.ico">
+<link rel="icon" href="favicon.ico?v=4">
 <style>
 :root{
   color-scheme:dark;
@@ -48,6 +48,26 @@ header{
   background:rgba(6,8,13,.72);
   border-bottom:1px solid rgba(255,255,255,.06);
 }
+.garland{
+  position:relative;z-index:19;height:22px;margin-top:-1px;
+  display:flex;justify-content:space-around;align-items:flex-start;
+  pointer-events:none;background:linear-gradient(180deg,#090d14,transparent);
+}
+.garland:before{
+  content:"";position:absolute;top:5px;left:2%;right:2%;height:1px;
+  background:linear-gradient(90deg,transparent,#3e4d2d,#8b6827,#3e4d2d,transparent);
+}
+.garland span{
+  width:9px;height:13px;border-radius:50% 50% 42% 42%;
+  background:var(--c);box-shadow:0 0 10px var(--c),0 0 22px var(--c);
+  animation:twinkle 2.4s ease-in-out infinite alternate;animation-delay:var(--d);
+}
+@keyframes twinkle{
+  0%{opacity:.45;transform:translateY(0) scale(.9)}
+  100%{opacity:1;transform:translateY(2px) scale(1.08)}
+}
+.holiday-chip{border-color:#4a3a1d!important;background:#1a1208!important;color:#f2d28a!important}
+.holiday-chip b{color:#ffd56a}
 .nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:28px}
 .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:2px}
 .brand img{width:38px;height:38px;border-radius:10px;object-fit:cover;box-shadow:0 0 24px #4da3d955}
@@ -86,18 +106,39 @@ h1{
   padding:7px 11px;border-radius:999px;
 }
 .chip b{color:var(--green);font-weight:600}
-.hero-art{position:relative;display:grid;place-items:center}
+#snow{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.hero-art{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;perspective:900px}
 .hero-art:before{
   content:"";position:absolute;width:78%;aspect-ratio:1;border-radius:50%;
   background:radial-gradient(circle,#3767a866 0,#1b245033 40%,transparent 70%);
   filter:blur(12px);
 }
-.hero-art img{
-  position:relative;width:min(420px,80%);border-radius:28px;
+.logo-wrap{
+  position:relative;width:58%;flex:0 0 auto;z-index:3;transform-style:preserve-3d;
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) rotate(2deg);
+  transition:transform .18s ease-out;will-change:transform;
+}
+.logo-wrap>img{
+  position:relative;display:block;width:100%;border-radius:28px;
   border:1px solid #ffffff22;
   box-shadow:0 40px 100px #000a, 0 0 70px #4da3d933;
-  transform:rotate(2deg);
 }
+.santa-hat{
+  position:absolute;width:48%;max-width:210px;top:-20%;right:-8%;z-index:2;
+  transform:rotate(-16deg);filter:drop-shadow(0 8px 12px #0008);
+  pointer-events:none;
+}
+.xmas-tree{
+  position:relative;width:38%;flex:0 0 auto;z-index:2;
+  filter:drop-shadow(0 24px 45px #0009) drop-shadow(0 0 32px #2f9e6844);
+  pointer-events:none;
+}
+.xmas-tree svg{display:block;width:100%;height:auto;overflow:visible}
+.xmas-tree .star{transform-box:fill-box;transform-origin:center;animation:starPulse 2.4s ease-in-out infinite}
+.xmas-tree .light{transform-box:fill-box;transform-origin:center;animation:lightPulse 2.2s ease-in-out infinite alternate}
+.xmas-tree .light:nth-of-type(2n){animation-delay:.7s}
+@keyframes starPulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.08);opacity:1}}
+@keyframes lightPulse{0%{opacity:.45;transform:scale(.85)}100%{opacity:1;transform:scale(1.15)}}
 .section{padding:58px 0}
 .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:26px}
 .section-head h2{margin:0;font-size:30px;letter-spacing:.3px}
@@ -162,8 +203,9 @@ footer{border-top:1px solid #151d27;padding:28px 0 40px;color:#667284;font-size:
 }
 @media(max-width:980px){
   .hero{grid-template-columns:1fr;padding-top:48px}
-  .hero-art{order:-1}
-  .hero-art img{width:min(300px,70%)}
+  .hero-art{order:-1;gap:6px}
+  .logo-wrap{width:56%}
+  .xmas-tree{width:40%}
   .grid{grid-template-columns:1fr 1fr}
   .shots{grid-template-columns:1fr 1fr}
   .steps{grid-template-columns:1fr 1fr}
@@ -180,9 +222,10 @@ footer{border-top:1px solid #151d27;padding:28px 0 40px;color:#667284;font-size:
 </style>
 </head>
 <body>
+<canvas id="snow" aria-hidden="true"></canvas>
 <header>
   <div class="wrap nav">
-    <a class="brand" href="#top"><img src="logo.png" alt="Specter"><span>SPECTER</span></a>
+    <a class="brand" href="#top"><img src="logo.png?v=4" alt="Specter"><span>SPECTER</span></a>
     <nav>
       <a href="#features">Функции</a>
       <a href="#screens">Скриншоты</a>
@@ -192,6 +235,22 @@ footer{border-top:1px solid #151d27;padding:28px 0 40px;color:#667284;font-size:
     <a class="btn small" href="https://funpay.com/users/7776085/" target="_blank" rel="noopener">Купить</a>
   </div>
 </header>
+<div class="garland" aria-hidden="true">
+  <span style="--c:#ff5a5f;--d:0s"></span>
+  <span style="--c:#ffd166;--d:.2s"></span>
+  <span style="--c:#63e6a5;--d:.4s"></span>
+  <span style="--c:#55b6ef;--d:.6s"></span>
+  <span style="--c:#b388ff;--d:.8s"></span>
+  <span style="--c:#ff5a5f;--d:1s"></span>
+  <span style="--c:#ffd166;--d:1.2s"></span>
+  <span style="--c:#63e6a5;--d:1.4s"></span>
+  <span style="--c:#55b6ef;--d:1.6s"></span>
+  <span style="--c:#b388ff;--d:1.8s"></span>
+  <span style="--c:#ff5a5f;--d:2s"></span>
+  <span style="--c:#ffd166;--d:2.2s"></span>
+  <span style="--c:#63e6a5;--d:2.4s"></span>
+  <span style="--c:#55b6ef;--d:2.6s"></span>
+</div>
 
 <main id="top">
   <div class="wrap">
@@ -201,7 +260,7 @@ footer{border-top:1px solid #151d27;padding:28px 0 40px;color:#667284;font-size:
         <h1>SPECTER</h1>
         <p>Внешний клиент с Aimbot, Silent Aim, ESP, Movement, World и гибкой настройкой HUD. Доступ по ключу, привязка к HWID и обновления через лоадер.</p>
         <div class="actions">
-          <a class="btn" href="https://funpay.com/users/7776085/" target="_blank" rel="noopener">Купить ключ</a>
+          <a class="btn" href="https://funpay.com/users/7776085/" target="_blank" rel="noopener">🎁 Купить ключ</a>
           <a class="btn ghost" href="#features">Смотреть функции</a>
         </div>
         <div class="chips">
@@ -209,9 +268,67 @@ footer{border-top:1px solid #151d27;padding:28px 0 40px;color:#667284;font-size:
           <span class="chip">1 ПК на ключ</span>
           <span class="chip">Обновления</span>
           <span class="chip">Windows 10/11 x64</span>
+          <span class="chip holiday-chip">До Нового года: <b id="ny-countdown">…</b></span>
         </div>
       </div>
-      <div class="hero-art"><img src="logo.png" alt="Specter logo"></div>
+      <div class="hero-art">
+        <div class="xmas-tree" aria-hidden="true">
+          <svg viewBox="0 0 220 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="treeGreen" x1="110" y1="24" x2="110" y2="270" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#35b979"/>
+                <stop offset=".55" stop-color="#157a50"/>
+                <stop offset="1" stop-color="#093a29"/>
+              </linearGradient>
+              <linearGradient id="starGold" x1="110" y1="0" x2="110" y2="52" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#fff7c2"/>
+                <stop offset="1" stop-color="#ffb52e"/>
+              </linearGradient>
+              <filter id="treeGlow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="5" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <ellipse cx="110" cy="279" rx="90" ry="14" fill="#dff8ff" opacity=".14"/>
+            <rect x="102" y="244" width="16" height="34" rx="4" fill="#5a3b22"/>
+            <path d="M110 24C129 62 161 100 192 136H28C59 100 91 62 110 24Z" fill="url(#treeGreen)"/>
+            <path d="M110 74C134 119 173 163 202 203H18C47 163 86 119 110 74Z" fill="url(#treeGreen)"/>
+            <path d="M110 132C141 183 187 229 211 267H9C33 229 79 183 110 132Z" fill="url(#treeGreen)"/>
+            <path d="M35 136Q110 159 185 136" stroke="#eafff8" stroke-width="5" stroke-linecap="round" opacity=".78"/>
+            <path d="M25 203Q110 228 195 203" stroke="#eafff8" stroke-width="5" stroke-linecap="round" opacity=".78"/>
+            <path d="M17 267Q110 292 203 267" stroke="#eafff8" stroke-width="5" stroke-linecap="round" opacity=".78"/>
+            <path d="M50 166Q110 196 170 166" stroke="#ffd166" stroke-width="2.4" stroke-dasharray="1 9" stroke-linecap="round" opacity=".9"/>
+            <path d="M40 230Q110 260 180 230" stroke="#ffd166" stroke-width="2.4" stroke-dasharray="1 9" stroke-linecap="round" opacity=".9"/>
+            <circle cx="77" cy="160" r="8" fill="#ff5a5f"/>
+            <circle cx="74" cy="157" r="2.5" fill="#fff" opacity=".55"/>
+            <circle cx="143" cy="178" r="7" fill="#55b6ef"/>
+            <circle cx="65" cy="223" r="8" fill="#ffd166"/>
+            <circle cx="154" cy="226" r="7" fill="#b388ff"/>
+            <circle cx="101" cy="204" r="6" fill="#ff5a5f"/>
+            <circle class="light" cx="59" cy="144" r="4" fill="#ffd166" filter="url(#treeGlow)"/>
+            <circle class="light" cx="160" cy="145" r="4" fill="#63e6a5" filter="url(#treeGlow)"/>
+            <circle class="light" cx="43" cy="196" r="4" fill="#55b6ef" filter="url(#treeGlow)"/>
+            <circle class="light" cx="177" cy="198" r="4" fill="#ff5a5f" filter="url(#treeGlow)"/>
+            <circle class="light" cx="88" cy="246" r="4" fill="#ffd166" filter="url(#treeGlow)"/>
+            <circle class="light" cx="132" cy="247" r="4" fill="#b388ff" filter="url(#treeGlow)"/>
+            <path class="star" d="M110 0l9 24 25 1-20 15 8 24-22-14-22 14 8-24-20-15 25-1z" fill="url(#starGold)" filter="url(#treeGlow)"/>
+            <rect x="60" y="267" width="21" height="17" rx="2" fill="#d83246"/>
+            <rect x="65" y="263" width="11" height="6" rx="2" fill="#ffd166"/>
+            <rect x="133" y="271" width="19" height="14" rx="2" fill="#3d9fd6"/>
+            <rect x="137" y="267" width="11" height="5" rx="2" fill="#fff8f0"/>
+          </svg>
+        </div>
+        <div class="logo-wrap">
+          <img src="logo.png?v=4" alt="Specter logo">
+          <svg class="santa-hat" viewBox="0 0 240 180" fill="none" aria-hidden="true">
+            <path d="M28 132C45 55 105 18 170 26c25 4 40 22 35 42-45-16-90-3-120 37-17 23-30 37-57 27Z" fill="#d83246"/>
+            <path d="M55 122c23-52 70-77 125-77-20 10-50 30-75 65Z" fill="#f25767" opacity=".7"/>
+            <path d="M18 126c37 24 102 26 147-4 20 10 23 28 5 38-60 20-125 8-160-14Z" fill="#fff8f0"/>
+            <circle cx="210" cy="45" r="26" fill="#fff8f0"/>
+            <circle cx="202" cy="38" r="8" fill="#fff" opacity=".85"/>
+          </svg>
+        </div>
+      </div>
     </section>
 
     <section class="section" id="features">
@@ -265,13 +382,13 @@ footer{border-top:1px solid #151d27;padding:28px 0 40px;color:#667284;font-size:
         <p>Реальные модули клиента. Нажми на карточку, чтобы открыть изображение.</p>
       </div>
       <div class="shots">
-        <a class="shot" href="esp.png" target="_blank" rel="noopener"><img src="esp.png" alt="ESP"><span>ESP</span></a>
-        <a class="shot" href="aimbot.png" target="_blank" rel="noopener"><img src="aimbot.png" alt="Aimbot"><span>Aimbot</span></a>
-        <a class="shot" href="silent-aim.png" target="_blank" rel="noopener"><img src="silent-aim.png" alt="Silent Aim"><span>Silent Aim</span></a>
-        <a class="shot" href="player.png" target="_blank" rel="noopener"><img src="player.png" alt="Movement"><span>Movement</span></a>
-        <a class="shot" href="world.png" target="_blank" rel="noopener"><img src="world.png" alt="World"><span>World</span></a>
-        <a class="shot" href="players.png" target="_blank" rel="noopener"><img src="players.png" alt="Players"><span>Players</span></a>
-        <a class="shot" href="configs.png" target="_blank" rel="noopener"><img src="configs.png" alt="Configs"><span>Configs</span></a>
+        <a class="shot" href="esp.png?v=4" target="_blank" rel="noopener"><img src="esp.png?v=4" alt="ESP"><span>ESP</span></a>
+        <a class="shot" href="aimbot.png?v=4" target="_blank" rel="noopener"><img src="aimbot.png?v=4" alt="Aimbot"><span>Aimbot</span></a>
+        <a class="shot" href="silent-aim.png?v=4" target="_blank" rel="noopener"><img src="silent-aim.png?v=4" alt="Silent Aim"><span>Silent Aim</span></a>
+        <a class="shot" href="player.png?v=4" target="_blank" rel="noopener"><img src="player.png?v=4" alt="Movement"><span>Movement</span></a>
+        <a class="shot" href="world.png?v=4" target="_blank" rel="noopener"><img src="world.png?v=4" alt="World"><span>World</span></a>
+        <a class="shot" href="players.png?v=4" target="_blank" rel="noopener"><img src="players.png?v=4" alt="Players"><span>Players</span></a>
+        <a class="shot" href="configs.png?v=4" target="_blank" rel="noopener"><img src="configs.png?v=4" alt="Configs"><span>Configs</span></a>
       </div>
     </section>
 
@@ -309,11 +426,11 @@ footer{border-top:1px solid #151d27;padding:28px 0 40px;color:#667284;font-size:
           <h2>Купить ключ</h2>
           <p>Открой FunPay, выбери подходящий срок и оплати. После покупки ты получишь ключ и лоадер.</p>
           <div class="actions">
-            <a class="btn violet" href="https://funpay.com/users/7776085/" target="_blank" rel="noopener">Купить на FunPay</a>
+            <a class="btn violet" href="https://funpay.com/users/7776085/" target="_blank" rel="noopener">🎁 Купить на FunPay</a>
             <a class="btn ghost" href="#features">Ещё раз функции</a>
           </div>
         </div>
-        <img src="logo.png" alt="" style="width:140px;border-radius:22px;border:1px solid #ffffff22;box-shadow:0 20px 60px #000a">
+        <img src="logo.png?v=4" alt="" style="width:140px;border-radius:22px;border:1px solid #ffffff22;box-shadow:0 20px 60px #000a">
       </div>
     </section>
   </div>
@@ -322,8 +439,106 @@ footer{border-top:1px solid #151d27;padding:28px 0 40px;color:#667284;font-size:
 <footer>
   <div class="wrap footer-row">
     <div>© 2026 Specter. Все права защищены.</div>
-    <div>Roblox External · Key + HWID · Windows 10/11</div>
+    <div>🎄 С наступающим Новым годом! · Roblox External · Windows 10/11</div>
   </div>
 </footer>
+<script>
+(function () {
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const countdown = document.getElementById('ny-countdown');
+  if (countdown) {
+    const updateCountdown = function () {
+      const now = new Date();
+      let target = new Date(now.getFullYear() + 1, 0, 1);
+      const startOfYear = new Date(now.getFullYear(), 0, 1);
+      if (now < startOfYear) target = startOfYear;
+      const left = target - now;
+      if (left <= 0) { countdown.textContent = 'уже сейчас!'; return; }
+      const days = Math.floor(left / 86400000);
+      const hours = Math.floor((left % 86400000) / 3600000);
+      const minutes = Math.floor((left % 3600000) / 60000);
+      countdown.textContent = days + ' д ' + hours + ' ч ' + minutes + ' м';
+    };
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  }
+  const art = document.querySelector('.hero-art');
+  const logo = document.querySelector('.logo-wrap');
+
+  if (art && logo) {
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+    window.addEventListener('pointermove', function (event) {
+      const rect = art.getBoundingClientRect();
+      const nx = (event.clientX - (rect.left + rect.width / 2)) / Math.max(1, rect.width / 2);
+      const ny = (event.clientY - (rect.top + rect.height / 2)) / Math.max(1, rect.height / 2);
+      targetX = Math.max(-1, Math.min(1, nx));
+      targetY = Math.max(-1, Math.min(1, ny));
+    }, { passive: true });
+    window.addEventListener('pointerleave', function () { targetX = targetY = 0; });
+    (function animateLogo() {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      const tilt = reduce ? 6 : 14;
+      logo.style.setProperty('--ry', (currentX * tilt).toFixed(2) + 'deg');
+      logo.style.setProperty('--rx', (-currentY * (tilt * 0.78)).toFixed(2) + 'deg');
+      requestAnimationFrame(animateLogo);
+    })();
+  }
+
+  const canvas = document.getElementById('snow');
+  if (!canvas) return;
+  const context = canvas.getContext('2d');
+  let width = 0, height = 0, flakes = [];
+
+  function resetFlake(flake, randomY) {
+    flake.x = Math.random() * width;
+    flake.y = randomY ? Math.random() * height : -12;
+    flake.radius = 0.7 + Math.random() * 2.1;
+    flake.speed = 0.25 + Math.random() * 0.85;
+    flake.drift = -0.18 + Math.random() * 0.5;
+    flake.phase = Math.random() * Math.PI * 2;
+    flake.alpha = 0.18 + Math.random() * 0.55;
+    flake.warm = Math.random() < 0.14;
+  }
+
+  function resize() {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = Math.round(width * ratio);
+    canvas.height = Math.round(height * ratio);
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    const limit = reduce ? 55 : 130;
+    const count = Math.min(limit, Math.max(28, Math.round(width / 14)));
+    flakes = Array.from({ length: count }, function () {
+      const flake = {};
+      resetFlake(flake, true);
+      return flake;
+    });
+  }
+
+  function frame(time) {
+    context.clearRect(0, 0, width, height);
+    for (const flake of flakes) {
+      flake.y += flake.speed;
+      flake.x += flake.drift + Math.sin(time * 0.0006 + flake.phase) * 0.18;
+      if (flake.y > height + 8) resetFlake(flake, false);
+      if (flake.x < -8) flake.x = width + 8;
+      if (flake.x > width + 8) flake.x = -8;
+      context.beginPath();
+      context.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+      context.fillStyle = flake.warm
+        ? 'rgba(255,214,120,' + flake.alpha + ')'
+        : 'rgba(225,240,255,' + flake.alpha + ')';
+      context.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(frame);
+})();
+</script>
 </body>
 </html>
